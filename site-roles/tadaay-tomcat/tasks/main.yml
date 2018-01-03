@@ -1,0 +1,18 @@
+---
+# tasks file for truedeploy.tomcat1
+- name: creating tadaay/uploads dir under /opt/tomcat
+  file:
+    path: /opt/tadaay/uploads
+    state: directory
+    owner: tomcat
+
+- name: copying  Tomcat init script to start tomcat as service
+  template: src=tomcat-initscript.sh.j2 dest=/etc/systemd/system/tomcat.service mode=0777
+
+- name: copying  server.xml file
+  template: src=server.xml.j2 dest=/opt/tomcat/conf/server.xml mode=0777
+
+- name: restart Tomcat
+  service: name=tomcat state=restarted
+
+

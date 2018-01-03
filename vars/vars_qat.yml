@@ -1,0 +1,33 @@
+---
+#vars for ntp
+ip_range: 192.168.11.44
+
+#vars for truedeploy.java
+java_version: 8u151
+java_url: http://download.oracle.com/otn-pub/java/jdk/{{ java_version }}-b12/e758a0de34e24606bca991d704f6dcbf/jdk-{{ java_version }}-linux-x64.tar.gz
+jre_home: /opt/jdk1.8.0_151
+java_oracle_jdk_install_path: /opt/jdk1.8.0_151
+java_home: /opt/jdk1.8.0_151
+
+#vars for truedeploy.tomcat
+tomcat_version: 8.0.48
+tomcat_url: http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
+java_home: /opt/jdk1.8.0_151
+
+#DB vars
+db_user: tadaay
+db_password: q^tcvFplUjU
+db_name: tadaay_qat
+mariadb_root_password: default123
+
+# vars for tadaay.httpd
+http_port: 80
+ip_addr: 192.168.11.44
+app_env: qat
+
+# vars for truedeploy.tomcat1
+app_env: qat
+project_name: tadaay
+java_home: /opt/jdk1.8.0_151
+
+

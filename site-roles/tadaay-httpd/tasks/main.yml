@@ -1,0 +1,50 @@
+---
+# tasks file for truedeploy.httpd1
+- name: copy default-site config file
+  template:
+    src: default-site.conf.j2
+    dest: /etc/httpd/conf.d/default-site.conf
+  
+- name: copying httpd.conf file
+  template:
+    src: httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+    mode: 0755
+    force: yes
+
+- name: copying production required files like ssl.conf
+  template:
+    src: "{{ item }}"
+    dest: /etc/httpd/conf.d/
+    mode: 0755
+    force: yes 
+  with_items:
+    - "assets.tadaay.com.conf"
+    - "autoindex.conf"
+    - "ssl.conf"
+    - "manual.conf"
+    - "userdir.conf"
+    - "welcome.conf"
+  when: inventory_hostname in groups['prd']
+  igonre_errors: yes
+
+
+- name: copy defaulte-site file for prod
+  copy: src=default-site.conf dest=/etc/httpd/conf.d/ mode=0755
+  when: inventory_hostname in groups['prd']
+  ignore_errors: yes
+
+
+- name: copy deflate config file
+  template:
+    src: deflate.conf.j2
+    dest: /etc/httpd/conf.d/deflate.conf
+
+- name: copy expires config file
+  template:
+    src: expires.conf.j2
+    dest: /etc/httpd/conf.d/expires.conf
+
+- name: restart httpd
+  service: name=httpd state=restarted
+

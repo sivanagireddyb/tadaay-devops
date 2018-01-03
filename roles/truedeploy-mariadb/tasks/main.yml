@@ -1,0 +1,59 @@
+---
+
+#- name: update system
+#  yum: name=* state=present
+
+- name: install epel repository && update system
+  yum: name=epel-release state=present
+
+- name: install mariadb-server
+  yum: name={{ item }} state=present update_cache=yes
+  become: yes
+  with_items:
+     - mariadb-server
+     - python-pip
+     - MySQL-python
+
+- name: start  mariadb
+  service: name=mariadb state=started enabled=yes
+
+- name: restart mariadb
+  service: name=mariadb state=restarted
+
+# This command will fail when the root password was set previously
+
+- name: Check if root password is set
+  shell: >
+    mysqladmin -u root status
+  changed_when: false
+  failed_when: false
+  register: root_pwd_check
+  ignore_errors: yes
+
+- name: Set MariaDB root password for the first time
+  mysql_user:
+    name: root
+    password: "{{ mariadb_root_password }}"
+    host_all: yes
+    state: present
+  when: root_pwd_check.rc == 0
+  tags: dbroot
+  ignore_errors: yes
+
+- name: create a new data base
+  mysql_db: 
+     name: "{{ db_name }}"
+     login_user: root 
+     login_password: "{{ mariadb_root_password }}" 
+     state: present 
+     collation: utf8_unicode_ci
+
+- name: create db user and password
+  mysql_user: 
+     name: "{{ db_user }}" 
+     password: "{{ db_password }}"
+     login_user: root
+     login_password: "{{ mariadb_root_password }}"
+     priv: "{{ db_name }}.*:ALL" 
+     state: present
+  tags: dbuser

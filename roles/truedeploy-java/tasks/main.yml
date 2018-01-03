@@ -1,0 +1,50 @@
+---
+
+#- name: update system
+#  yum: name=* state=present
+
+- name: install epel repository && update system
+  yum: name=epel-release state=present update_cache=yes
+
+- name: chect is it already downloaded or not
+  stat:
+    path: /opt/jdk-{{ java_version }}-linux-x64.tar.gz
+  register: result
+
+- name: download java
+  get_url:
+      headers: "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"
+      url: "{{ java_url }}"
+      dest: /opt/
+      mode: 0655
+      force: no
+  when: result.stat.exists == false
+
+- name: chect is it already extracted or not
+  stat:
+    path: "{{ java_home }}"
+  register: ext
+
+- name: extract tar file
+  unarchive: src=/opt/jdk-{{ java_version }}-linux-x64.tar.gz dest=/opt/ remote_src=yes
+  when: ext.stat.exists == false
+
+- name: Java | Update alternatives
+  alternatives:
+    name: "{{ item }}"
+    link: /usr/bin/{{ item }}
+    path: "{{ java_oracle_jdk_install_path }}/bin/{{ item }}"
+  with_items:
+    - "java"
+    - "javac"
+    - "jar"
+
+- name: exporting jre home by running script
+  template: src=java.sh.j2  dest=/etc/profile.d/java.sh mode=0777
+
+- name: running java.sh script
+  shell: bash java.sh
+  args:
+      chdir: /etc/profile.d/
+  
+  

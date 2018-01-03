@@ -1,0 +1,6 @@
+---
+# defaults file for truedeploy.tomcat
+tomcat_version:  
+tomcat_url: 
+java_home:
+

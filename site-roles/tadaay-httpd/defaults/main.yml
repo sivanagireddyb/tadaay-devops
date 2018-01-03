@@ -1,0 +1,5 @@
+---
+# vars file for tadaay.httpd
+http_port: 
+ip_addr: 
+app_env:

@@ -1,0 +1,31 @@
+<VirtualHost *:80>
+
+DocumentRoot /var/www/html
+<Directory "/var/www/html/>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+</Directory>
+
+RewriteEngine  on
+RewriteCond %{HTTP_USER_AGENT} libwww-perl.*
+RewriteRule .* ? [F,L]
+
+#rewrite rules for wordpress
+RewriteRule "/news/(.*)" "/news/$1" [L]
+RewriteRule "/events/(.*)" "/events/$1" [L]
+RewriteRule "/docs/(.*)" "/docs/$1" [L]
+RewriteRule "/blog/(.*)" "/blog/$1" [L]
+RewriteRule "/wp-admin/(.*)" "/wp-admin/$1" [L]
+
+    ProxyPreserveHost On
+    ProxyPass / http://{{ ip_addr }}:8080/
+    ProxyPassReverse / http://{{ ip_addr }}:8080/
+
+
+#RewriteBase    "/Polyglot/"
+#RewriteRule "/Polyglot/(.*)" "index.php?$1" [PT,QSA]
+#RewriteCond "%{REQUEST_URI}"  "/^Polyglot"
+#RewriteRule "/Polyglot/(.*)" "/$2" [PT,QSA]
+#RewriteRule "/hyderabad" "/Polyglot/static/index.jsp?city=hyderbad" [PT,QSA]
+#RewriteRule "/(.*)" "/Polyglot/$1" [PT,QSA]
+</VirtualHost>

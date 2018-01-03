@@ -1,0 +1,5 @@
+---
+# vars file for tadaay.tomcat
+app_env: 
+project_name:
+java_home: 
