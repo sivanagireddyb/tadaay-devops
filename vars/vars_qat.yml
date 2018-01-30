@@ -15,10 +15,10 @@ tomcat_url: http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v{{ tomcat_version
 java_home: /opt/jdk1.8.0_151
 
 #DB vars
-db_user: tadaay
-db_password: q^tcvFplUjU
-db_name: tadaay_qat
-mariadb_root_password: default123
+db_user: 
+db_password: 
+db_name: 
+mariadb_root_password :
 
 # vars for tadaay.httpd
 http_port: 80
