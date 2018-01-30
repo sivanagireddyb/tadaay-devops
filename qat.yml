@@ -3,7 +3,7 @@
   become: true
   vars:
 #vars for ntp
-   ip_range: 192.168.11.204
+   ip_range: 
 
 #vars for truedeploy.java
    java_version: 8u151
@@ -19,18 +19,18 @@
 
 #DB vars
    db_user: tadaay
-   db_password: q^tcvFplUjU
-   db_name: tadaay_qat
-   mariadb_root_password: default123
+   db_password: 
+   db_name:
+   mariadb_root_password: 
 
 # vars for tadaay.httpd
-   http_port: 80
-   ip_addr: 192.168.11.204
-   app_env: qat
+   http_port: 
+   ip_addr: 
+   app_env: 
 
 # vars for truedeploy.tomcat1
    app_env: qat
-   project_name: tadaay
+   project_name: 
    java_home: /opt/jdk1.8.0_151
 
   roles:
