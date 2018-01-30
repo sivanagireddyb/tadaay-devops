@@ -24,20 +24,14 @@
 ## 192.168.1.110
 
 
-[qat]
-192.168.11.23 
-[qat:vars]
-ansible_connection=ssh 
-ansible_user=root 
-ansible_ssh_pass=default123 
-ansible_become=true
+[
 
 [stg]
-35.185.87.52
+google cloud ip
 [stg:vars]
 ansible_connection=ssh 
-ansible_user=siva_b 
-ansible_ssh_pass=snr@170495 
+ansible_user=
+ansible_ssh_pass= 
 ansible_become=true
 
 
